@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRols {
+  customer
+  Admin
+}
+
+model Users {
+  UserId       String   @id @default(uuid())
+  UserName     String
+  UserEmail    String
+  UserPassword String?
+  UserRole     UserRols @default(customer)
+  UserCart     Cart?
+}
+
+model Products {
+  ProductId       String            @id @default(uuid())
+  ProductName     String
+  ProductDesc     String
+  ProductQunatati Int
+  ProductPrice    Float
+  ProductCatgory  ProductsCatgory[]
+  CartItems       CartItem[]
+}
+
+model Cart {
+  CartId String @id @default(uuid())
+
+  UserId String @unique
+
+  User Users @relation(fields: [UserId], references: [UserId])
+
+  Items CartItem[]
+}
+
+model CartItem {
+  CartItemId String @id @default(uuid())
+
+  CartId    String
+  ProductId String
+  Quantity  Int    @default(1)
+
+  Cart    Cart     @relation(fields: [CartId], references: [CartId])
+  Product Products @relation(fields: [ProductId], references: [ProductId])
+}
+
+model Catgory {
+  CatgoyId       String            @id @default(uuid())
+  CatgoryName    String
+  ProductCatgory ProductsCatgory[]
+}
+
+model ProductsCatgory {
+  ProductCatgoryId String   @id @default(uuid())
+  Products         Products @relation(fields: Product_Id, references: ProductId)
+  Product_Id       String
+  Catgories        Catgory  @relation(fields: Catgory_Id, references: CatgoyId)
+  Catgory_Id       String
+}

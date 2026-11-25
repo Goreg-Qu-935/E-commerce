@@ -14,9 +14,15 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.7.2",
     "express-validator": "^7.3.2",
+    "google-auth-library": "^11.3.2",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.5.0",
     "mysql2": "^3.24.4",
     "nodemon": "^3.1.14",
     "tsx": "^4.23.15",
@@ -26,7 +32,8 @@
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^26.6.2",
-    "dotenv": "^18.0.4",
+    "dotenv": "^18.0.9",
+    "prisma": "^6.19.3",
     "tsc": "^2.0.4",
     "typescript": "^7.0.2"
   }

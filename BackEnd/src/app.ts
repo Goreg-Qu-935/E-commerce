@@ -1,30 +1,23 @@
+import 'dotenv/config';
+import * as dotenv from "dotenv";
+
 import express from "express";
-import db from './module/db.js'
-//import env  from "dotenv";
-
 import catgory from './Routs/catgory.js'
-import Products from './Routs/Prducts.js'
+import Products from './Routs/Product.js'
 import Users from './Routs/Users.js'
-
+import cart from "./Routs/cart.js"
 
 import cors from "cors";
 
 const app = express();
+dotenv.config({ path: ".env" ,override:true});
 app.use(cors())
 app.use(express.urlencoded({ extended: true }));
 
-
-db.getConnection().then(() => {
-    console.log("Done Connting to the  db ")
-})
-
 app.use('/api', catgory);
-
+app.use('/api', cart);
 app.use('/api', Products);
 app.use('/api', Users);
-//console.log(process.env.PORT)
-//const ENV=env.config({path:"./config.env"})
-//ENV.parsed.PORT
 
 app.listen(3000, (err) => {
     if (!err)

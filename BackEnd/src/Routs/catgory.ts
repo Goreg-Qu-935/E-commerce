@@ -1,12 +1,22 @@
 import express from "express";
-import { Catgories } from "../controlers/Catgory/Catgories.js";
+import { CatgoryModule } from "../modules/Catgory.js";
+import { Auth } from "../MiddelWare/Auth.js";
+
+
 const Route = express.Router();
 
+Route.get("/catgory",Auth.Authnitcaion,CatgoryModule.GetAllCatgorys);
 
-Route.get("/catgory", Catgories.GetAll)
-Route.get("/catgory/:id", Catgories.getCatgoryWithProducts)
-Route.delete("/catgory/:id", Catgories.Delete)
-Route.put("/catgory/:id", Catgories.Update)
-Route.post("/catgory", Catgories.Add)
+Route.get("/catgory/:id",Auth.Authnitcaion,CatgoryModule.GetSpsifecCatgorys);
 
-export default Route
+Route.post("/catgory",Auth.Authnitcaion,Auth.Authrization,CatgoryModule.CreatCatgory);
+
+Route.put("/catgory/:id",Auth.Authnitcaion,Auth.Authrization,CatgoryModule.updateCatgory);
+
+Route.delete("/catgory/:id",Auth.Authnitcaion,Auth.Authrization,CatgoryModule.DeleteCategory);
+
+Route.post("/catgory/:CatgoryId/product/:ProductId",Auth.Authrization,Auth.Authnitcaion,CatgoryModule.addProductToCatogry);
+
+Route.delete("/catgory/product/:ProductId",Auth.Authnitcaion,Auth.Authrization,CatgoryModule.DeleteProductFromCatgory);
+
+export default Route;
